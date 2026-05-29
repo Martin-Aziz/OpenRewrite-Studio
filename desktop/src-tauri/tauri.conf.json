@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "OpenRewrite Studio",
+  "version": "0.1.0",
+  "identifier": "studio.openrewrite.desktop",
+  "build": {
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "cd ../.. && TAURI_BUILD=1 npm --workspace frontend run build",
+    "devUrl": "http://localhost:3000",
+    "frontendDist": "../../frontend/out"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "OpenRewrite Studio",
+        "width": 1280,
+        "height": 860,
+        "minWidth": 1024,
+        "minHeight": 720,
+        "resizable": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["dmg", "app"],
+    "category": "Productivity",
+    "shortDescription": "Privacy-first rewriting studio",
+    "longDescription": "OpenRewrite Studio is a privacy-first rewriting studio with transparent diffs, meaning preservation, and local model support."
+  }
+}

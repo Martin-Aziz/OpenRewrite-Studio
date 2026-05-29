@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openrewrite.local/schemas/rewrite-request.schema.json",
+  "title": "RewriteRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["text", "mode", "tone", "strength", "meaningLock", "provider"],
+  "properties": {
+    "text": { "type": "string", "minLength": 1, "maxLength": 12000 },
+    "mode": {
+      "type": "string",
+      "enum": ["standard", "fluency", "professional", "simple", "shorten", "expand", "natural", "humanize", "academic"]
+    },
+    "tone": {
+      "type": "string",
+      "enum": ["neutral", "warm", "direct", "formal", "confident", "friendly"]
+    },
+    "strength": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "meaningLock": { "type": "boolean" },
+    "provider": {
+      "type": "string",
+      "enum": ["local", "openai-compatible", "ollama"]
+    }
+  }
+}

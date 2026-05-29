@@ -1,0 +1,47 @@
+{
+  "name": "openrewrite-studio",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "desktop"
+  ],
+  "scripts": {
+    "dev": "concurrently -n frontend,api,ai -c blue,green,magenta \"npm run dev:frontend\" \"npm run dev:api\" \"npm run dev:ai\"",
+    "dev:frontend": "npm --workspace frontend run dev",
+    "dev:api": "cd backend && go run ./cmd/api",
+    "dev:ai": "cd ai-service && (test -x .venv/bin/python && .venv/bin/python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload || python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload)",
+    "dev:desktop": "cd desktop && npm run dev",
+    "build": "npm --workspace frontend run build",
+    "typecheck": "npm --workspace frontend run typecheck",
+    "lint": "npm --workspace frontend run lint",
+    "test": "npm run test:frontend && npm run test:backend && npm run test:ai",
+    "test:frontend": "npm --workspace frontend run test",
+    "test:e2e": "npm --workspace frontend run test:e2e",
+    "test:backend": "cd backend && go test ./...",
+    "test:ai": "cd ai-service && (test -x .venv/bin/python && .venv/bin/python -m pytest || python3 -m pytest)",
+    "check:desktop": "cd desktop/src-tauri && cargo check",
+    "format": "npm --workspace frontend run format"
+  },
+  "devDependencies": {
+    "concurrently": "9.2.1"
+  },
+  "overrides": {
+    "autoprefixer": {
+      "postcss": "8.5.15"
+    },
+    "next": {
+      "postcss": "8.5.15"
+    },
+    "postcss": "8.5.15",
+    "postcss-import": {
+      "postcss": "8.5.15"
+    },
+    "postcss-js": {
+      "postcss": "8.5.15"
+    },
+    "postcss-nested": {
+      "postcss": "8.5.15"
+    }
+  }
+}

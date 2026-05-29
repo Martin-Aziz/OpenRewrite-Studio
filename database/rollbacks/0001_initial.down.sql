@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS usage_events;
+DROP TABLE IF EXISTS api_keys;
+DROP TABLE IF EXISTS audit_logs;
+DROP TABLE IF EXISTS evaluations;
+DROP TABLE IF EXISTS ai_requests;
+DROP TABLE IF EXISTS presets;
+DROP TABLE IF EXISTS rewrite_sentences;
+DROP TABLE IF EXISTS rewrite_versions;
+DROP TABLE IF EXISTS rewrite_sessions;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS workspace_members;
+DROP TABLE IF EXISTS workspaces;
+DROP TABLE IF EXISTS users;

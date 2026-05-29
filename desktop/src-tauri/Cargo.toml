@@ -1,0 +1,21 @@
+[package]
+name = "openrewrite-studio-desktop"
+version = "0.1.0"
+description = "Desktop shell for OpenRewrite Studio"
+authors = ["OpenRewrite Studio"]
+edition = "2021"
+license = "AGPL-3.0-only"
+
+[lib]
+name = "openrewrite_studio_desktop_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.5.3", features = [] }
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tauri = { version = "2.9.4", features = [] }
+tauri-plugin-opener = "2.5.0"
+ureq = { version = "3.1.2", default-features = false, features = ["json"] }

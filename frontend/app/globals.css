@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 42 36% 96%;
+  --foreground: 216 24% 10%;
+  --muted: 214 18% 91%;
+  --muted-foreground: 216 11% 38%;
+  --border: 216 16% 82%;
+  --input: 216 16% 82%;
+  --ring: 205 74% 46%;
+  --primary: 205 74% 34%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 153 26% 89%;
+  --secondary-foreground: 158 34% 18%;
+  --accent: 20 82% 58%;
+  --accent-foreground: 216 24% 10%;
+  --destructive: 0 71% 46%;
+  --destructive-foreground: 0 0% 100%;
+}
+
+.dark {
+  --background: 218 22% 10%;
+  --foreground: 42 36% 96%;
+  --muted: 218 19% 17%;
+  --muted-foreground: 216 13% 72%;
+  --border: 218 17% 25%;
+  --input: 218 17% 25%;
+  --ring: 193 68% 55%;
+  --primary: 193 68% 55%;
+  --primary-foreground: 218 22% 10%;
+  --secondary: 155 20% 22%;
+  --secondary-foreground: 153 38% 86%;
+  --accent: 22 80% 62%;
+  --accent-foreground: 218 22% 10%;
+  --destructive: 0 68% 58%;
+  --destructive-foreground: 0 0% 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: hsl(var(--background));
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  color: hsl(var(--foreground));
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.55), rgb(255 255 255 / 0) 360px),
+    hsl(var(--background));
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+::selection {
+  color: hsl(var(--primary-foreground));
+  background: hsl(var(--primary));
+}
+
+.writing-surface {
+  background-image:
+    linear-gradient(rgb(15 23 42 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(15 23 42 / 0.035) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
