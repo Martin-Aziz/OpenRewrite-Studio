@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from enum import Enum
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -9,6 +10,13 @@ RewriteMode = Literal["standard", "fluency", "professional", "simple", "shorten"
 RewriteTone = Literal["neutral", "warm", "direct", "formal", "confident", "friendly"]
 RewriteProvider = Literal["local", "openai-compatible", "ollama"]
 DiffStatus = Literal["unchanged", "light", "changed", "high-risk"]
+
+
+class QualityTier(str, Enum):
+    EXCELLENT = "excellent"   # meaning >= 0.9, confidence >= 0.85
+    GOOD = "good"             # meaning >= 0.75, confidence >= 0.70
+    FAIR = "fair"             # meaning >= 0.60, confidence >= 0.55
+    POOR = "poor"             # below thresholds
 
 
 class RewriteRequest(BaseModel):
@@ -62,6 +70,13 @@ class RewriteEvaluation(BaseModel):
     facts_preserved: bool = Field(alias="factsPreserved")
     citations_preserved: bool = Field(alias="citationsPreserved")
     warnings: list[RewriteWarning]
+    # New evaluation fields
+    readability_score: float = Field(default=0.0, alias="readabilityScore", ge=0.0, le=1.0)
+    sentence_variety_score: float = Field(default=0.0, alias="sentenceVarietyScore", ge=0.0, le=1.0)
+    passive_voice_reduced: bool = Field(default=False, alias="passiveVoiceReduced")
+    ai_signatures_removed: int = Field(default=0, alias="aiSignaturesRemoved")
+    word_count_delta: int = Field(default=0, alias="wordCountDelta")
+    quality_tier: QualityTier = Field(default=QualityTier.FAIR, alias="qualityTier")
 
 
 class AIRewriteResponse(BaseModel):
@@ -71,3 +86,5 @@ class AIRewriteResponse(BaseModel):
     provider: str
     diffs: list[SentenceDiff]
     evaluation: RewriteEvaluation
+    input_tokens: int = Field(default=0, alias="inputTokens")
+    output_tokens: int = Field(default=0, alias="outputTokens")

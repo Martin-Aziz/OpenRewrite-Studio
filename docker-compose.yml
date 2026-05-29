@@ -36,10 +36,11 @@ services:
       ai-service:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "/app/api", "-healthcheck"]
-      interval: 20s
-      timeout: 5s
-      retries: 5
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
   ai-service:
     build:
@@ -55,10 +56,17 @@ services:
     ports:
       - "8000:8000"
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
-      interval: 20s
-      timeout: 5s
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 15s
       retries: 5
+      start_period: 90s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
 
   database:
     image: postgres:16-alpine
@@ -70,7 +78,7 @@ services:
       - postgres-data:/var/lib/postgresql/data
       - ./database/migrations:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U openrewrite -d openrewrite"]
+      test: ["CMD-SHELL", "pg_isready -U openrewrite"]
       interval: 10s
       timeout: 5s
       retries: 5

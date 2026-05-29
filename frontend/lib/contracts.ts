@@ -64,7 +64,37 @@ export interface RewriteEvaluation {
   factsPreserved: boolean;
   citationsPreserved: boolean;
   warnings: RewriteWarning[];
+  readabilityScore?: number;
+  sentenceVarietyScore?: number;
+  passiveVoiceReduced?: boolean;
+  aiSignaturesRemoved?: number;
+  wordCountDelta?: number;
+  qualityTier?: "excellent" | "good" | "fair" | "poor";
 }
+
+export const rewriteEvaluationSchema = z.object({
+  meaningScore: z.number(),
+  confidenceScore: z.number(),
+  humanizerScore: z.number(),
+  naturalnessScore: z.number(),
+  styleNotes: z.array(z.string()),
+  factsPreserved: z.boolean(),
+  citationsPreserved: z.boolean(),
+  warnings: z.array(
+    z.object({
+      code: z.string(),
+      message: z.string(),
+      sentenceIndex: z.number().int().optional(),
+      confidence: z.number()
+    })
+  ),
+  readabilityScore: z.number().min(0).max(1).optional().default(0),
+  sentenceVarietyScore: z.number().min(0).max(1).optional().default(0),
+  passiveVoiceReduced: z.boolean().optional().default(false),
+  aiSignaturesRemoved: z.number().int().optional().default(0),
+  wordCountDelta: z.number().int().optional().default(0),
+  qualityTier: z.enum(["excellent", "good", "fair", "poor"]).optional().default("good")
+});
 
 export interface RewriteResponse {
   sessionId: string;

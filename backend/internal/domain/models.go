@@ -82,6 +82,13 @@ type RewriteEvaluation struct {
 	FactsPreserved     bool             `json:"factsPreserved"`
 	CitationsPreserved bool             `json:"citationsPreserved"`
 	Warnings           []RewriteWarning `json:"warnings"`
+
+	ReadabilityScore     float64 `json:"readabilityScore,omitempty"`
+	SentenceVarietyScore float64 `json:"sentenceVarietyScore,omitempty"`
+	PassiveVoiceReduced  bool    `json:"passiveVoiceReduced,omitempty"`
+	AISignaturesRemoved  int     `json:"aiSignaturesRemoved,omitempty"`
+	WordCountDelta       int     `json:"wordCountDelta,omitempty"`
+	QualityTier          string  `json:"qualityTier,omitempty"`
 }
 
 type RewriteWarning struct {
